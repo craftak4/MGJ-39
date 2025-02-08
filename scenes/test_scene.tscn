@@ -1,0 +1,47 @@
+[gd_scene load_steps=8 format=3 uid="uid://btdwg4mqelbeg"]
+
+[ext_resource type="Script" path="res://scenes/background.gd" id="1_7luge"]
+[ext_resource type="PackedScene" uid="uid://b8nktk8ltlmay" path="res://scenes/characters/player.tscn" id="1_8boyn"]
+[ext_resource type="Texture2D" uid="uid://c44ewbkbn2jp7" path="res://tres/backgroundatlas.tres" id="1_ek6g6"]
+[ext_resource type="Texture2D" uid="uid://dloauyc2losh6" path="res://assets/textures/SpaceShooterAssets/SpaceShooterAssetPack_BackGrounds.png" id="2_ivrjo"]
+[ext_resource type="Script" path="res://scenes/camera.gd" id="4_npsr5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sne7r"]
+atlas = ExtResource("2_ivrjo")
+region = Rect2(0, 0, 128, 256)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gduat"]
+size = Vector2(164, 0)
+
+[node name="TestScene" type="Node2D"]
+
+[node name="Background" type="Node2D" parent="."]
+scale = Vector2(1.64, 1.64)
+script = ExtResource("1_7luge")
+
+[node name="Second2" type="Sprite2D" parent="Background"]
+position = Vector2(0, 128)
+texture = SubResource("AtlasTexture_sne7r")
+
+[node name="First" type="Sprite2D" parent="Background"]
+position = Vector2(0, -128)
+texture = ExtResource("1_ek6g6")
+
+[node name="Second" type="Sprite2D" parent="Background"]
+position = Vector2(0, -384)
+texture = SubResource("AtlasTexture_sne7r")
+
+[node name="Area2D" type="Area2D" parent="Background"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Background/Area2D"]
+position = Vector2(0, -256)
+shape = SubResource("RectangleShape2D_gduat")
+
+[node name="Player" parent="." instance=ExtResource("1_8boyn")]
+
+[node name="Camera2D" type="Camera2D" parent="." groups=["camera"]]
+offset = Vector2(0, -40.015)
+zoom = Vector2(6.785, 6.785)
+script = ExtResource("4_npsr5")
+
+[connection signal="body_entered" from="Background/Area2D" to="Background" method="ResetPointGetBody"]

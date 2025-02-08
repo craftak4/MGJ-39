@@ -1,0 +1,156 @@
+[gd_scene load_steps=14 format=3 uid="uid://b8nktk8ltlmay"]
+
+[ext_resource type="Script" path="res://scenes/characters/player.gd" id="1_fhd4c"]
+[ext_resource type="Texture2D" uid="uid://m07hfyrh2h3k" path="res://assets/textures/SpaceShooterAssets/SpaceShooterAssetPack_Ships.png" id="1_obian"]
+[ext_resource type="Script" path="res://states/StateMachine.gd" id="3_6wps3"]
+[ext_resource type="Script" path="res://states/PlayerStates/Idle.gd" id="4_ikcd1"]
+[ext_resource type="Script" path="res://states/PlayerStates/Move.gd" id="5_s5qqi"]
+
+[sub_resource type="Animation" id="Animation_nuo1x"]
+resource_name = "default"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"default"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_cmavv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"default"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_4hg6b"]
+resource_name = "move"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"turn"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kta7s"]
+_data = {
+"RESET": SubResource("Animation_cmavv"),
+"default": SubResource("Animation_nuo1x"),
+"move": SubResource("Animation_4hg6b")
+}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ksvmk"]
+atlas = ExtResource("1_obian")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_15iu1"]
+atlas = ExtResource("1_obian")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6q63h"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ksvmk")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_15iu1")
+}],
+"loop": true,
+"name": &"turn",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_t07wn"]
+radius = 4.0
+height = 8.0
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "animation") groups=["player"]]
+script = ExtResource("1_fhd4c")
+sprite = NodePath("Sprite")
+animation = NodePath("Animation")
+
+[node name="Animation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_kta7s")
+}
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_6q63h")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_t07wn")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("StartingState")]
+script = ExtResource("3_6wps3")
+StartingState = NodePath("IdleState")
+
+[node name="IdleState" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle", "move")]
+script = ExtResource("4_ikcd1")
+idle = NodePath(".")
+move = NodePath("../MoveState")
+
+[node name="MoveState" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle", "move")]
+script = ExtResource("5_s5qqi")
+idle = NodePath("../IdleState")
+move = NodePath(".")

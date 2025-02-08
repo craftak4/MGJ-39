@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://c44ewbkbn2jp7"]
+
+[ext_resource type="Texture2D" uid="uid://dloauyc2losh6" path="res://assets/textures/SpaceShooterAssets/SpaceShooterAssetPack_BackGrounds.png" id="1_5inxd"]
+
+[resource]
+atlas = ExtResource("1_5inxd")
+region = Rect2(0, 0, 128, 256)
