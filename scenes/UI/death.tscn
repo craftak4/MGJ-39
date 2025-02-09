@@ -1,0 +1,80 @@
+[gd_scene load_steps=8 format=3 uid="uid://c04qa3crpe8td"]
+
+[ext_resource type="Script" path="res://scenes/UI/death.gd" id="1_yvib0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r6lsk"]
+bg_color = Color(0.501961, 0, 0, 1)
+border_width_left = 100
+border_width_top = 100
+border_width_right = 100
+border_width_bottom = 100
+border_color = Color(1, 0, 0, 0.713726)
+border_blend = true
+
+[sub_resource type="LabelSettings" id="LabelSettings_shwh5"]
+font_size = 106
+outline_size = 5
+shadow_size = 31
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tm60o"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5q7st"]
+bg_color = Color(0.82881, 2.71939e-06, 5.77569e-07, 1)
+border_width_bottom = 5
+border_color = Color(0.645551, 1.82897e-06, 3.36915e-07, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7ot4q"]
+bg_color = Color(1, 0, 0, 1)
+border_width_top = 5
+border_color = Color(0.647059, 0, 0, 0)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e4axi"]
+bg_color = Color(1, 0, 0, 1)
+border_width_bottom = 5
+border_color = Color(0.645551, 1.82897e-06, 3.36915e-07, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="death" type="CanvasLayer"]
+script = ExtResource("1_yvib0")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_r6lsk")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "You died!"
+label_settings = SubResource("LabelSettings_shwh5")
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+theme_override_styles/focus = SubResource("StyleBoxEmpty_tm60o")
+theme_override_styles/hover = SubResource("StyleBoxFlat_5q7st")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_7ot4q")
+theme_override_styles/normal = SubResource("StyleBoxFlat_e4axi")
+text = "Return to the main menu"
+
+[connection signal="pressed" from="PanelContainer/VBoxContainer/Button" to="." method="returnMenu"]

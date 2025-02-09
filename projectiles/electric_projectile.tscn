@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://cvgcqloxgsnoy"]
+
+[ext_resource type="Script" path="res://projectiles/projectile.gd" id="1_1df7j"]
+[ext_resource type="Texture2D" uid="uid://cf4oebsv58obg" path="res://assets/textures/SpaceShooterAssets/SpaceShooterAssetPack_Projectiles.png" id="2_jeutj"]
+[ext_resource type="Script" path="res://projectiles/eletric_projectile.gd" id="3_rmlvt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7nim5"]
+atlas = ExtResource("2_jeutj")
+region = Rect2(16, 8, 8, 8)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8g08m"]
+radius = 4.12311
+
+[node name="electric_projectile" type="Node2D" node_paths=PackedStringArray("type", "sprite", "hit")]
+script = ExtResource("1_1df7j")
+type = NodePath("EletricProjectile")
+sprite = NodePath("Sprite2D")
+hit = NodePath("Area2D")
+dmg = 15
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_7nim5")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_8g08m")
+
+[node name="EletricProjectile" type="Node" parent="."]
+script = ExtResource("3_rmlvt")
+
+[connection signal="body_entered" from="Area2D" to="." method="Area2Dbody"]

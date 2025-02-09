@@ -2,14 +2,16 @@ class_name PlayerState
 extends State
 
 @onready var plr:Player = get_tree().get_first_node_in_group("player")
+@onready var projectileDB:ProjectileDB = get_tree().root.get_node("ProjectileDB")
 var flippedSprite = false
 
-const playerSpeed:int = 3000
+const playerSpeed:int = 5000
 const acceleration:float = 0.05
 const deceleration:float = 0.05
 
 @export var idle:IdleState
 @export var move:MoveState
+@export var basic_shoot:BasicShootState
 
 var anim_names:Dictionary = {
 	"idle" : "default",

@@ -1,3 +1,31 @@
-[gd_scene format=3 uid="uid://dxpfoucjv715n"]
+[gd_scene load_steps=5 format=3 uid="uid://dxpfoucjv715n"]
 
-[node name="Enemy" type="CharacterBody2D"]
+[ext_resource type="Texture2D" uid="uid://m07hfyrh2h3k" path="res://assets/textures/SpaceShooterAssets/SpaceShooterAssetPack_Ships.png" id="1_nb34f"]
+[ext_resource type="Script" path="res://scenes/characters/enemy.gd" id="1_rgjrk"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b073v"]
+atlas = ExtResource("1_nb34f")
+region = Rect2(8, 8, 8, 8)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wwmfx"]
+radius = 4.0
+height = 8.0
+
+[node name="Enemy" type="CharacterBody2D" groups=["enemy"]]
+rotation = 3.14159
+script = ExtResource("1_rgjrk")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_b073v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_wwmfx")
+
+[node name="ProjectileEmitter" type="Marker2D" parent="."]
+position = Vector2(-1.39876e-06, -16)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="shot"]

@@ -1,0 +1,103 @@
+[gd_scene load_steps=9 format=3 uid="uid://ivg5jffpr6ri"]
+
+[ext_resource type="Texture2D" uid="uid://dloauyc2losh6" path="res://assets/textures/SpaceShooterAssets/SpaceShooterAssetPack_BackGrounds.png" id="1_3e7hs"]
+[ext_resource type="Script" path="res://scenes/UI/menu.gd" id="1_p5lho"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_852dx"]
+atlas = ExtResource("1_3e7hs")
+region = Rect2(129, 0, 128, 256)
+
+[sub_resource type="LabelSettings" id="LabelSettings_yvweg"]
+font_size = 91
+font_color = Color(0.617455, 0.617455, 0.617455, 1)
+outline_size = 10
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ehdpf"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_30rqy"]
+bg_color = Color(1.49205e-06, 0.504397, 0.504397, 1)
+border_width_bottom = 10
+border_color = Color(6.01634e-07, 0.354794, 0.354794, 1)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nthkh"]
+bg_color = Color(0, 0.6, 0.6, 1)
+border_width_top = 10
+border_color = Color(0, 0.352941, 0.352941, 0)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k7x82"]
+bg_color = Color(0, 0.6, 0.6, 1)
+border_width_bottom = 10
+border_color = Color(6.01634e-07, 0.354794, 0.354794, 1)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_p5lho")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_852dx")
+expand_mode = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 185
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 185
+theme_override_constants/margin_bottom = 100
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.72
+text = "Command shooter"
+label_settings = SubResource("LabelSettings_yvweg")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 155
+theme_override_constants/margin_right = 155
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 66
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ehdpf")
+theme_override_styles/hover = SubResource("StyleBoxFlat_30rqy")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_nthkh")
+theme_override_styles/normal = SubResource("StyleBoxFlat_k7x82")
+text = "PLAY"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/Button" to="." method="play"]

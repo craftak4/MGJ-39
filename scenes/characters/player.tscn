@@ -1,13 +1,15 @@
-[gd_scene load_steps=14 format=3 uid="uid://b8nktk8ltlmay"]
+[gd_scene load_steps=16 format=3 uid="uid://b8nktk8ltlmay"]
 
 [ext_resource type="Script" path="res://scenes/characters/player.gd" id="1_fhd4c"]
 [ext_resource type="Texture2D" uid="uid://m07hfyrh2h3k" path="res://assets/textures/SpaceShooterAssets/SpaceShooterAssetPack_Ships.png" id="1_obian"]
 [ext_resource type="Script" path="res://states/StateMachine.gd" id="3_6wps3"]
 [ext_resource type="Script" path="res://states/PlayerStates/Idle.gd" id="4_ikcd1"]
 [ext_resource type="Script" path="res://states/PlayerStates/Move.gd" id="5_s5qqi"]
+[ext_resource type="Script" path="res://states/PlayerStates/BasicShoot.gd" id="6_37ycb"]
+[ext_resource type="PackedScene" uid="uid://bexer2mdl3ecn" path="res://scenes/game_ui.tscn" id="7_sj561"]
 
-[sub_resource type="Animation" id="Animation_nuo1x"]
-resource_name = "default"
+[sub_resource type="Animation" id="Animation_cmavv"]
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -33,8 +35,8 @@ tracks/1/keys = {
 "values": [0]
 }
 
-[sub_resource type="Animation" id="Animation_cmavv"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_nuo1x"]
+resource_name = "default"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -125,10 +127,11 @@ animations = [{
 radius = 4.0
 height = 8.0
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "animation") groups=["player"]]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "animation", "projectileSpawner") groups=["player"]]
 script = ExtResource("1_fhd4c")
 sprite = NodePath("Sprite")
 animation = NodePath("Animation")
+projectileSpawner = NodePath("ProjectileEmitter")
 
 [node name="Animation" type="AnimationPlayer" parent="."]
 libraries = {
@@ -145,12 +148,25 @@ shape = SubResource("CapsuleShape2D_t07wn")
 script = ExtResource("3_6wps3")
 StartingState = NodePath("IdleState")
 
-[node name="IdleState" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle", "move")]
+[node name="IdleState" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle", "move", "basic_shoot")]
 script = ExtResource("4_ikcd1")
 idle = NodePath(".")
 move = NodePath("../MoveState")
+basic_shoot = NodePath("../BasicShootState")
 
-[node name="MoveState" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle", "move")]
+[node name="MoveState" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle", "move", "basic_shoot")]
 script = ExtResource("5_s5qqi")
 idle = NodePath("../IdleState")
 move = NodePath(".")
+basic_shoot = NodePath("../BasicShootState")
+
+[node name="BasicShootState" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle", "move", "basic_shoot")]
+script = ExtResource("6_37ycb")
+idle = NodePath("../IdleState")
+move = NodePath("../MoveState")
+basic_shoot = NodePath(".")
+
+[node name="ProjectileEmitter" type="Marker2D" parent="."]
+position = Vector2(0, -14)
+
+[node name="GameUI" parent="." instance=ExtResource("7_sj561")]

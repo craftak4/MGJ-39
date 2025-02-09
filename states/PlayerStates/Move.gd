@@ -15,5 +15,10 @@ func ProcessPhysics(delta:float):
 	DeterminateFlip()
 	super(delta)
 
+func ProcessInput(event:InputEvent):
+	if Input.is_action_just_pressed("shoot") && (get_tree().current_scene as Session).CanShoot: 
+		return basic_shoot
+	super(event)
+
 func ProcessMovement(delta:float):
 	plr.velocity.x = lerp(plr.velocity.x,(GetDir() * playerSpeed * delta),acceleration)

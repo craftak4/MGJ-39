@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://b6v3231osncto"]
+
+[ext_resource type="Script" path="res://projectiles/projectile.gd" id="1_2ji33"]
+[ext_resource type="Texture2D" uid="uid://cf4oebsv58obg" path="res://assets/textures/SpaceShooterAssets/SpaceShooterAssetPack_Projectiles.png" id="2_dagem"]
+[ext_resource type="Script" path="res://projectiles/missile_projectile.gd" id="2_firu3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4sluk"]
+atlas = ExtResource("2_dagem")
+region = Rect2(40, 16, 8, 8)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vfqia"]
+radius = 1.0
+height = 6.0
+
+[node name="MissileProjectile" type="Node2D" node_paths=PackedStringArray("type", "sprite", "hit")]
+script = ExtResource("1_2ji33")
+type = NodePath("MissileProjectile")
+sprite = NodePath("Sprite2D")
+hit = NodePath("Area2D")
+dmg = 25
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_4sluk")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CapsuleShape2D_vfqia")
+
+[node name="MissileProjectile" type="Node" parent="."]
+script = ExtResource("2_firu3")
+
+[connection signal="body_entered" from="Area2D" to="." method="Area2Dbody"]

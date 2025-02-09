@@ -7,6 +7,8 @@ func Enter():
 
 func ProcessInput(event:InputEvent):
 	super(event)
+	if Input.is_action_just_pressed("shoot") && (get_tree().current_scene as Session).CanShoot: 
+		return basic_shoot
 	if GetDir() != 0: return move
 
 func ProcessPhysics(delta:float):
