@@ -22,6 +22,10 @@ var CommandsDB:Dictionary = {
 		var pr:Projectile = (load(get_tree().root.get_node("ProjectileDB").Projectiles.get("missile")) as PackedScene).instantiate()
 		get_tree().current_scene.add_child(pr)
 		pr.global_position = plr.projectileSpawner.global_position,
+	"advan" : func():
+		var pr:Projectile = (load(get_tree().root.get_node("ProjectileDB").Projectiles.get("adv")) as PackedScene).instantiate()
+		get_tree().current_scene.add_child(pr)
+		pr.global_position = plr.projectileSpawner.global_position,
 }
 
 func commnad_submit(new_text: String) -> void:

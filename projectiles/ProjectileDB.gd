@@ -5,4 +5,5 @@ var Projectiles:Dictionary = {
 	"shock" : "res://projectiles/electric_projectile.tscn",
 	"enemy" : "res://projectiles/enemy_projectile.tscn",
 	"missile" : "res://projectiles/missile_projectile.tscn",
+	"adv" : "res://projectiles/adv_projectile.tscn",
 }
